@@ -6,8 +6,8 @@ SparkleFormation.dynamic(:iam_policy) do |_name, _config = {}|
   if _config[:policy_statements].is_a?(Array)
     # Maybe a splat here on the first _config, instead.
     statements = _config[:policy_statements].map { |statement| registry!(statement.to_sym) }.first
-  elsif _config[:policy_statements.is_a?(Hash)
-    statements = _config[:policy_statements].hash { |statement, config| registry!(statement.to_sym, config) }.first
+  elsif _config[:policy_statements].is_a?(Hash)
+    statements = _config[:policy_statements].map { |statement, config| registry!(statement.to_sym, config) }.first
   end
 
   # <shrug> http://docs.aws.amazon.com/autoscaling/latest/userguide/IAM.html#AutoScaling_ARN_Format
@@ -22,5 +22,5 @@ SparkleFormation.dynamic(:iam_policy) do |_name, _config = {}|
     )
   end
 
-  dynamic!(:i_a_m_policy, _name).depends_on _config.fetch(:iam_roles, [ "#{_name}IAMRole" ]).map { |r| r.capitalize }
+  dynamic!(:i_a_m_policy, _name).depends_on _config.fetch(:iam_roles, [ "#{_name.capitalize}IAMRole" ])
 end
