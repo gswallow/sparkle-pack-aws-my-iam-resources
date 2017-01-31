@@ -22,5 +22,5 @@ SparkleFormation.dynamic(:iam_policy) do |_name, _config = {}|
     )
   end
 
-  dynamic!(:i_a_m_policy, _name).depends_on _config.fetch(:iam_roles, [ "#{_name}IAMRoles" ]).map { |r| r.capitalize }
+  dynamic!(:i_a_m_policy, _name).depends_on _config.fetch(:iam_roles, [ "#{_name}IAMRole" ]).map { |r| r.capitalize }
 end
