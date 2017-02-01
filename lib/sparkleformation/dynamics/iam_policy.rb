@@ -15,11 +15,9 @@ SparkleFormation.dynamic(:iam_policy) do |_name, _config = {}|
     policy_name "#{_name}IAMPolicy".capitalize
     policy_document do
       version '2012-10-17'
-      statements statements
+      statement statements
     end
-    roles _array(
-      _config.fetch(:iam_roles, [ "#{_name}_i_a_m_role".to_sym ]).map { |r| ref!(r) }
-    )
+    roles _config.fetch(:iam_roles, [ "#{_name}_i_a_m_role".to_sym ]).map { |r| ref!(r) }
   end
 
   dynamic!(:i_a_m_policy, _name).depends_on _config.fetch(:iam_roles, [ "#{_name.capitalize}IAMRole" ])
